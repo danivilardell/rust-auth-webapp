@@ -1,0 +1,27 @@
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    color:#525252;
+}
+
+.container {
+    max-width: 20%;
+    margin: 0 auto;
+    padding: 20px 10px;
+    horiz-align: center;
+    background-color: aliceblue;
+    text-align: center;
+    box-shadow: 5px 10px;
+}
+
+body {
+    background-color: cornflowerblue;
+}
+
+.input {
+    font-size: 1.3vw;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.button_sign_in {
+    text-align: center;
+}
