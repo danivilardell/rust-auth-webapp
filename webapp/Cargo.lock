@@ -128,6 +128,7 @@ dependencies = [
  "rocket",
  "rocket_dyn_templates",
  "tokio",
+ "webapp_iam",
 ]
 
 [[package]]
@@ -2501,6 +2502,10 @@ name = "wasm-bindgen-shared"
 version = "0.2.82"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6598dd0bd3c7d51095ff6531a5b23e02acdc81804e30d8f07afb77b7215a140a"
+
+[[package]]
+name = "webapp_iam"
+version = "0.1.0"
 
 [[package]]
 name = "winapi"

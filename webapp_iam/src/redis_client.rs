@@ -27,21 +27,13 @@ pub async fn check_username_password(
 
     match password_saved {
         Some(pass) => {
-            if password == pass { Ok(()) }
-            else { Err(eyre::eyre!("Wrong password")) }
-        },
+            if password == pass {
+                Ok(())
+            } else {
+                Err(eyre::eyre!("Wrong password"))
+            }
+        }
         None => Err(eyre::eyre!("Username doesn't exists")),
     }
 }
 
-pub async fn init_redis() -> eyre::Result<RedisClient> {
-    let config = RedisConfig::default();
-    let policy = ReconnectPolicy::default();
-    let client = RedisClient::new(config);
-
-    client.connect(Some(policy));
-    client.wait_for_connect().await?;
-    client.flushall(false).await?;
-
-    Ok(client)
-}
