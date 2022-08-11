@@ -6,10 +6,52 @@
     <title>Auth Login Rust</title>
     <link rel="stylesheet" href="/style.css">
 </head>
-<body class="background">
-    <br>
-    <center>
-        <a href="../index.html">Log out</a>
-    </center>
+<body>
+    <div class="navbar">
+        <a class="button-23" href="#home">Home</a>
+        <a class="button-23" href="#news">News</a>
+        <a class="button-23" href="#contact">Contact</a>
+        <a class="button-23" href="../index.html" style="margin-left: auto; float:right; position: relative; right: 30px;">Log out</a>
+    </div>
+
+    <div class="info_box" style= "width: 25%; height: 70%; top: 100px; left: 15px;">
+        <h1 style="text-align: center;">FILTER ACTIVITIES</h1>
+    </div>
+    <div class="info_box" style= "width: 20%; height: 70%; top: 100px; right: 15px; float:right;">
+        <h1 style="text-align: center;">PLAN ACTIVITY</h1>
+        <center>
+        <form>
+            <h3>Sport type</h3>
+            <select name="cars" class="button-23" id="cars">
+                <option value="run">Run</option>
+                <option value="bike">Bike</option>
+                <option value="swim">Swim</option>
+            </select>
+            <br>
+            <h3>Date</h3>
+            <input type="datetime-local" id="meeting-time"
+                   name="meeting-time" value="2022-08-9T19:30"
+                   min="2022-08-9T19:30" max="2023-08-9T19:30"
+                   class="button-23">
+            <br>
+            <h3>Level</h3>
+            <div class="rating">
+                <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
+                <label for="star5" >☆</label>
+                <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
+                <label for="star4" >☆</label>
+                <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
+                <label for="star3" >☆</label>
+                <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
+                <label for="star2" >☆</label>
+                <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
+                <label for="star1" >☆</label>
+                <div class="clear"></div>
+            </div>
+            <br><br><br>
+            <a type="submit" class="button-23" href="#create_activity">Create Activity</a>
+        </form>
+        </center>
+    </div>
 </body>
 </html>

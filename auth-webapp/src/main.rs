@@ -41,6 +41,7 @@ async fn sign_up(form: Form<LoginInfo>, state: &State<RedisClient>) -> Status {
 
 #[launch]
 async fn rocket() -> _ {
+    dotenv::dotenv().expect("Failed to read .env file");
     let redis_client = init_redis().await.unwrap();
     rocket::build()
         .mount("/", routes![sign_in, sign_up])

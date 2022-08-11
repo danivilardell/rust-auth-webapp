@@ -3,6 +3,11 @@ h1 {
     color:#525252;
 }
 
+h3 {
+    font-family: 'Open Sans', sans-serif;
+    color:#525252;
+}
+
 .container {
     width: 20%;
     height: auto;
@@ -20,6 +25,17 @@ h1 {
     border: 2px solid #222222;
 }
 
+.info_box {
+    z-index: 0;
+    margin: 0 auto;
+    padding: 30px 20px;
+    background-color: white;
+    border: 1px solid #C0C0C0;
+    position: absolute;
+    border-radius: 8px;
+    border: 2px solid #222222;
+}
+
 .background {
   position: relative;
   left: 0;
@@ -29,7 +45,7 @@ h1 {
 }
 
 body {
-    background-color: #8DD685;
+    background-color: white;
 }
 
 .input {
@@ -124,4 +140,90 @@ body {
     position: relative;
     text-align: center;
     width: auto;
+}
+
+/* The navigation bar */
+.navbar {
+  z-index: 1;
+  position:absolute
+  overflow: hidden;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  height: 70px;
+  background-color: white;
+}
+
+/* Links inside the navbar */
+.navbar a {
+  top: 10px;
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  margin: 10px;
+}
+
+/* Change background on mouse-over */
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+/* Main content */
+.main {
+  margin-top: 40px; /* Add a top margin to avoid content overlay */
+}
+
+.sport_type {
+    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 14px;
+    margin-top: 5px;
+}
+
+/* Start rating*/
+.rating {
+    width: 200px;
+    unicode-bidi: bidi-override;
+    font-size: 30px;
+    direction: rtl;
+    text-align: center;
+}
+
+.rating > label {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 1.1em;
+    cursor: pointer;
+    color: #000;
+}
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+    color: transparent;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    color: #FFD700;
+}
+
+.hide {
+    display: none;
+}
+
+.clear {
+    float: none;
+    clear: both;
 }
