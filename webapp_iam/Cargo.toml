@@ -1,0 +1,18 @@
+[package]
+name = "webapp_iam"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+eyre = "0.6.8"
+sha2 = "0.10.2"
+base64 = "0.13.0"
+dotenv = "0.15.0"
+fred = "5.1.0"
+rocket = "0.5.0-rc.2"
+sqlx = { version = "0.6.0", default-features = false, features = [
+    "postgres",
+    "macros",
+    "offline",
+    "runtime-actix-native-tls",
+]}
