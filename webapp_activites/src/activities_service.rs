@@ -22,5 +22,5 @@ pub struct ActivityInfo {
 
 #[post("/create_activity", data = "<form>")]
 pub async fn sign_in(form: Form<ActivityInfo>) -> Status {
-
+    println!("{form:?}");
 }
