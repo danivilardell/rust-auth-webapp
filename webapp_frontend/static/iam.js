@@ -1,12 +1,10 @@
 
 
 function init() {
-
     let sign_up_button = document.getElementById("button_sign_up");
     let sign_in_button = document.getElementById("button_sign_in");
     sign_up_button.addEventListener("click", sign_up);
     sign_in_button.addEventListener("click", sign_in);
-
 }
 
 function sign_up() {

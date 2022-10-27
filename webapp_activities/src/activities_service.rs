@@ -31,4 +31,5 @@ pub struct ActivityInfo {
 pub async fn create_activity(form: Form<ActivityInfo>) -> Status {
 
     Status::Ok
+    println!("{form:?}");
 }
