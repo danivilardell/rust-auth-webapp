@@ -1,0 +1,10 @@
+[package]
+name = "webapp_activities"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = "0.5.0-rc.2"
+tokio = "1.20.1"
+eyre = "0.6.8"
+serde = "1.0.147"

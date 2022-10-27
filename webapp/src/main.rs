@@ -1,15 +1,16 @@
 #[macro_use]
 extern crate rocket;
 
+use dotenv::dotenv;
 use fred::prelude::*;
 use rocket::fs::{relative, FileServer};
-use webapp_iam::sign_in_sign_up_service::{sign_up, sign_in};
-use tokio::time::Duration;
-use dotenv::dotenv;
 use sqlx::{
     postgres::{PgConnectOptions, PgPoolOptions},
     PgPool,
 };
+use tokio::time::Duration;
+use webapp_iam::sign_in_sign_up_service::{sign_in, sign_up};
+use webapp_activities::activities_service::{create_activity};
 
 #[launch]
 async fn rocket() -> _ {
@@ -20,8 +21,11 @@ async fn rocket() -> _ {
     test_query(pool.clone()).await;
 
     rocket::build()
-        .mount("/", routes![sign_in, sign_up])
-        .mount("/", FileServer::from(relative!("/../webapp_frontend/static")))
+        .mount("/", routes![sign_in, sign_up, create_activity])
+        .mount(
+            "/",
+            FileServer::from(relative!("/../webapp_frontend/static")),
+        )
         .manage(redis_client.clone())
         .manage(pool)
 }
@@ -56,13 +60,10 @@ pub async fn connect_db() -> eyre::Result<PgPool> {
 }
 
 pub async fn test_query(pool: PgPool) {
-    let res = sqlx::query_as!(
-        User,
-        r#"SELECT * FROM users"#,
-    )
-    .fetch_all(&pool)
-    .await
-    .unwrap();
+    let res = sqlx::query_as!(User, r#"SELECT * FROM users"#,)
+        .fetch_all(&pool)
+        .await
+        .unwrap();
 
     println!("USERS: {res:?}");
 }

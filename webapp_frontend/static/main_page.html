@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width">
     <title>Auth Login Rust</title>
     <link rel="stylesheet" href="/style.css">
+    <script src="/main_page.js" charset="utf-8" defer></script>
 </head>
 <body>
     <div class="navbar">
@@ -20,36 +21,28 @@
     <div class="info_box" style= "width: 20%; height: 70%; top: 100px; right: 15px; float:right;">
         <h1 style="text-align: center;">PLAN ACTIVITY</h1>
         <center>
-        <form>
+        <form action="/create_activity" method="POST">
             <h3>Sport type</h3>
-            <select name="cars" class="button-23" id="cars">
+            <select name="sport" class="button-23">
                 <option value="run">Run</option>
                 <option value="bike">Bike</option>
                 <option value="swim">Swim</option>
             </select>
             <br>
             <h3>Date</h3>
-            <input type="datetime-local" id="meeting-time"
-                   name="meeting-time" value="2022-08-9T19:30"
+            <input type="datetime-local"
+                   name="date" value="2022-08-9T19:30"
                    min="2022-08-9T19:30" max="2023-08-9T19:30"
                    class="button-23">
             <br>
             <h3>Level</h3>
-            <div class="rating">
-                <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
-                <label for="star5" >☆</label>
-                <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
-                <label for="star4" >☆</label>
-                <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
-                <label for="star3" >☆</label>
-                <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
-                <label for="star2" >☆</label>
-                <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
-                <label for="star1" >☆</label>
-                <div class="clear"></div>
-            </div>
+            <select name="intensity" class="button-23">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
             <br><br><br>
-            <a type="submit" class="button-23" href="#create_activity">Create Activity</a>
+            <button type="submit" class="button-23">Create Activity</button>
         </form>
         </center>
     </div>

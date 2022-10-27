@@ -1,7 +1,7 @@
 use fred::prelude::*;
-use std::env;
-use sha2::Sha256;
 use sha2::Digest;
+use sha2::Sha256;
+use std::env;
 
 pub async fn store_username_password(
     username: String,
@@ -32,9 +32,12 @@ pub async fn check_username_password(
 
     match password_saved {
         Some(pass) => {
-            if hashed_password == pass { Ok(()) }
-            else { Err(eyre::eyre!("Wrong password")) }
-        },
+            if hashed_password == pass {
+                Ok(())
+            } else {
+                Err(eyre::eyre!("Wrong password"))
+            }
+        }
         None => Err(eyre::eyre!("Username doesn't exists")),
     }
 }
