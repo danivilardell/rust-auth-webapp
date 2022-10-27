@@ -29,7 +29,6 @@ pub struct ActivityInfo {
 
 #[post("/create_activity", data = "<form>")]
 pub async fn create_activity(form: Form<ActivityInfo>) -> Status {
-
-    Status::Ok
     println!("{form:?}");
+    Status::Ok
 }
