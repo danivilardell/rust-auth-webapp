@@ -8,17 +8,15 @@ use sqlx::{
     postgres::{PgConnectOptions, PgPoolOptions},
     PgPool,
 };
-use tokio::time::Duration;
 use webapp_iam::sign_in_sign_up_service::{sign_in, sign_up};
-use webapp_activities::activities_service::{create_activity};
+use webapp_activities::activities_service::create_activity;
+use webapp_db::db_init::connect_db;
 
 #[launch]
 async fn rocket() -> _ {
     dotenv().ok();
     let redis_client = init_redis().await.unwrap();
     let pool = connect_db().await.unwrap();
-
-    test_query(pool.clone()).await;
 
     rocket::build()
         .mount("/", routes![sign_in, sign_up, create_activity])
@@ -40,38 +38,6 @@ pub async fn init_redis() -> eyre::Result<RedisClient> {
     client.flushall(false).await?;
 
     Ok(client)
-}
-
-pub async fn connect_db() -> eyre::Result<PgPool> {
-    // Read connect options from environment variables, directly using the environment variables
-    // specified in sqlx_core::postgres::options::PgConnectOptions
-    // (PGHOST, PGPORT, PGUSER, PGPASSWORD, PGDATABASE, PGSSLROOTCERT, PGSSLMODE, PGAPPNAME)
-    let connect_options = PgConnectOptions::new();
-    println!("{connect_options:?}");
-
-    let pool_options = PgPoolOptions::new()
-        .test_before_acquire(true)
-        .max_connections(10)
-        .acquire_timeout(Duration::from_secs(30))
-        .idle_timeout(Duration::from_secs(10 * 60))
-        .max_lifetime(Duration::from_secs(30 * 60));
-
-    Ok(pool_options.connect_with(connect_options).await?)
-}
-
-pub async fn test_query(pool: PgPool) {
-    let res = sqlx::query_as!(User, r#"SELECT * FROM users"#,)
-        .fetch_all(&pool)
-        .await
-        .unwrap();
-
-    println!("USERS: {res:?}");
-}
-
-#[derive(Debug)]
-pub struct User {
-    username: String,
-    password: String,
 }
 
 // CREATE DATABASE webapp

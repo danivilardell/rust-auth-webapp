@@ -42,18 +42,6 @@ pub async fn check_username_password(
     }
 }
 
-pub async fn init_redis() -> eyre::Result<RedisClient> {
-    let config = RedisConfig::default();
-    let policy = ReconnectPolicy::default();
-    let client = RedisClient::new(config);
-
-    client.connect(Some(policy));
-    client.wait_for_connect().await?;
-    client.flushall(false).await?;
-
-    Ok(client)
-}
-
 fn get_hash(password: String) -> String {
     let mut hasher = Sha256::new();
     let salt = env::var("PASSWORD_SALT").unwrap();

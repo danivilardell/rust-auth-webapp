@@ -19,7 +19,6 @@ pub enum Intensity {
 }
 
 #[derive(Debug, Clone, FromForm, Serialize, Deserialize)]
-#[cfg_attr(test, derive(PartialEq, UriDisplayQuery))]
 #[serde(crate = "rocket::serde")]
 pub struct ActivityInfo {
     pub sport: SportType,

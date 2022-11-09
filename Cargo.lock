@@ -151,6 +151,7 @@ dependencies = [
  "sqlx",
  "tokio",
  "webapp_activities",
+ "webapp_db",
  "webapp_iam",
 ]
 
@@ -2332,6 +2333,16 @@ dependencies = [
  "eyre",
  "rocket",
  "serde",
+ "tokio",
+]
+
+[[package]]
+name = "webapp_db"
+version = "0.1.0"
+dependencies = [
+ "dotenv",
+ "eyre",
+ "sqlx",
  "tokio",
 ]
 
