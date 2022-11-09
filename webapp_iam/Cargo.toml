@@ -10,6 +10,7 @@ base64 = "0.13.0"
 dotenv = "0.15.0"
 fred = "5.1.0"
 rocket = "0.5.0-rc.2"
+webapp_db = { path = "../webapp_db" }
 sqlx = { version = "0.6.0", default-features = false, features = [
     "postgres",
     "macros",

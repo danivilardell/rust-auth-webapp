@@ -2357,6 +2357,7 @@ dependencies = [
  "rocket",
  "sha2",
  "sqlx",
+ "webapp_db",
 ]
 
 [[package]]
