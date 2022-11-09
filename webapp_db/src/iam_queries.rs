@@ -1,17 +1,7 @@
-use dotenv::dotenv;
-use webapp_db;
-use webapp_db::{db_init::connect_db, iam_queries::User};
-
-#[tokio::test]
-async fn test_query() {
-    dotenv().ok();
-    let pool = connect_db().await.unwrap();
-    let res = sqlx::query_as!(User, r#"SELECT * FROM users"#,)
-        .fetch_all(&pool)
-        .await
-        .unwrap();
-
-    println!("USERS: {res:?}");
+#[derive(Debug)]
+pub struct User {
+    pub username: String,
+    pub password: String,
 }
 
 #[tokio::test]

@@ -4,13 +4,9 @@ extern crate rocket;
 use dotenv::dotenv;
 use fred::prelude::*;
 use rocket::fs::{relative, FileServer};
-use sqlx::{
-    postgres::{PgConnectOptions, PgPoolOptions},
-    PgPool,
-};
-use webapp_iam::sign_in_sign_up_service::{sign_in, sign_up};
 use webapp_activities::activities_service::create_activity;
 use webapp_db::db_init::connect_db;
+use webapp_iam::sign_in_sign_up_service::{sign_in, sign_up};
 
 #[launch]
 async fn rocket() -> _ {
@@ -39,13 +35,3 @@ pub async fn init_redis() -> eyre::Result<RedisClient> {
 
     Ok(client)
 }
-
-// CREATE DATABASE webapp
-//\c webapp
-/* CREATE TABLE IF NOT EXISTS users (
-username text not null,
-password text not null);*/
-// CREATE ROLE webapp_test WITH LOGIN PASSWORD 'webapp-test-password';
-// GRANT CONNECT ON DATABASE webapp TO webapp_test;
-// GRANT ALL PRIVILEGES ON TABLE users TO webapp_test;
-// insert into users (username, password) values ('test_user', 'test_password');
