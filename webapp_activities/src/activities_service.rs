@@ -1,33 +1,15 @@
 use rocket::form::Form;
 use rocket::http::Status;
-use rocket::post;
-use rocket::serde::{Deserialize, Serialize};
-use rocket::{FromForm, FromFormField};
-
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, FromFormField)]
-pub enum SportType {
-    Swim,
-    Run,
-    Bike,
-}
-
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, FromFormField)]
-pub enum Intensity {
-    Easy,
-    Medium,
-    Hard,
-}
-
-#[derive(Debug, Clone, FromForm, Serialize, Deserialize)]
-#[serde(crate = "rocket::serde")]
-pub struct ActivityInfo {
-    pub sport: SportType,
-    pub date: String,
-    pub intensity: Intensity,
-}
+use rocket::{post, State};
+use sqlx::PgPool;
+use webapp_db::activities_queries::{insert_activity, ActivityInfo};
 
 #[post("/create_activity", data = "<form>")]
-pub async fn create_activity(form: Form<ActivityInfo>) -> Status {
-    println!("{form:?}");
-    Status::Ok
+pub async fn create_activity(form: Form<ActivityInfo>, pool: &State<PgPool>) -> Status {
+    println!("{:?}", form);
+    let response = insert_activity(form.into_inner(), pool).await;
+    match response {
+        Ok(_) => Status::Ok,
+        Err(e) => Status::Conflict,
+    }
 }

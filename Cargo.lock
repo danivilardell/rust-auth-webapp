@@ -1651,9 +1651,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.83"
+version = "1.0.87"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "38dd04e3c8279e75b31ef29dbdceebfe5ad89f4d0937213c53f7d49d01b3d5a7"
+checksum = "6ce777b7b150d76b9cf60d28b55f5847135a003f7d7350c6be7a773508ce7d45"
 dependencies = [
  "itoa",
  "ryu",
@@ -2333,7 +2333,9 @@ dependencies = [
  "eyre",
  "rocket",
  "serde",
+ "sqlx",
  "tokio",
+ "webapp_db",
 ]
 
 [[package]]
@@ -2342,6 +2344,8 @@ version = "0.1.0"
 dependencies = [
  "dotenv",
  "eyre",
+ "rocket",
+ "serde",
  "sqlx",
  "tokio",
 ]
@@ -2355,6 +2359,8 @@ dependencies = [
  "eyre",
  "fred",
  "rocket",
+ "serde",
+ "serde_json",
  "sha2",
  "sqlx",
  "webapp_db",

@@ -22,15 +22,20 @@ function sign_up() {
 
 function sign_in() {
     username = document.getElementById("username").value;
-        password = document.getElementById("password").value;
+    password = document.getElementById("password").value;
 
-        fetch("/sign_in", {
-            method: "POST",
-            body: new URLSearchParams({ username, password }),
-        }).then((response) => {
-            if (response.ok) window.location.href = "/main_page.html";
-            else if(response.status == 409) alert("Wrong username or password.");
-        });
+    fetch("/sign_in", {
+        method: "POST",
+        body: new URLSearchParams({ username, password }),
+    }).then((response) => {
+        if (response.ok) {
+            response.json().then(function(result) {
+                window.location.href = "/main_page.html";
+                document.cookie = "id_key=" + result.id;
+            })
+        }
+        else if(response.status == 409) alert("Wrong username or password.");
+    });
 }
 
 init();

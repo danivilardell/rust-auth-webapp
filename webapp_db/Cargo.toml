@@ -15,3 +15,5 @@ sqlx = { version = "0.6.0", default-features = false, features = [
     "runtime-actix-native-tls",
 ]}
 dotenv = "0.15.0"
+rocket = "0.5.0-rc.2"
+serde = "1.0.147"

@@ -17,3 +17,5 @@ sqlx = { version = "0.6.0", default-features = false, features = [
     "offline",
     "runtime-actix-native-tls",
 ]}
+serde = "1.0.147"
+serde_json = "1.0.87"
