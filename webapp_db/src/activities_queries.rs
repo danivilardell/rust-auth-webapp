@@ -4,17 +4,17 @@ use rocket::{FromForm, FromFormField};
 use sqlx::PgPool;
 use std::fmt;
 
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, FromFormField)]
-pub enum Type {
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, FromFormField, sqlx::Type)]
+#[sqlx(type_name = "activitytype", rename_all = "lowercase")]
+pub enum ActivityType {
     Swim,
     Run,
-    Bike,
-    Movie,
-    Convention,
-    Concert,
+    Bike, //Movie,
+          //Convention,
+          //Concert,
 }
 
-impl fmt::Display for Type {
+impl fmt::Display for ActivityType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:?}", self)
     }
@@ -22,19 +22,19 @@ impl fmt::Display for Type {
 
 #[derive(Debug, Clone, FromForm, Serialize, Deserialize)]
 pub struct ActivityInfo {
-    pub activity_type: Type,
+    pub activity_type: ActivityType,
     pub date: String,
-    pub user: String,
+    pub username: String,
 }
 
 pub async fn insert_activity(activity: ActivityInfo, pool: &PgPool) -> eyre::Result<()> {
-    let user = check_user_by_hash(activity.user.clone(), pool).await;
+    let user = check_user_by_hash(activity.username.clone(), pool).await;
 
     match user {
         Some(user) => {
             match sqlx::query!(
                 r#"INSERT INTO activities (activity_type, date, username) VALUES ($1, $2, $3)"#,
-                activity.activity_type.to_string(),
+                activity.activity_type as ActivityType,
                 activity.date,
                 user.username
             )
@@ -46,5 +46,18 @@ pub async fn insert_activity(activity: ActivityInfo, pool: &PgPool) -> eyre::Res
             }
         }
         None => Err(eyre::eyre!("Can't insert value to database")),
+    }
+}
+
+pub async fn get_activities(pool: &PgPool) -> eyre::Result<Vec<ActivityInfo>> {
+    match sqlx::query_as!(
+        ActivityInfo,
+        r#"SELECT activity_type AS "activity_type: ActivityType", date, username FROM activities"#
+    )
+    .fetch_all(pool)
+    .await
+    {
+        Ok(activities) => Ok(activities),
+        Err(_) => Err(eyre::eyre!("Can't get activities from database.")),
     }
 }

@@ -12,12 +12,14 @@ psql -v ON_ERROR_STOP=1 --username postgres <<-EOSQL
       password text not null
     );
     insert into users (username, password) values ('test_user', 'test_password');
+
+    CREATE TYPE valid_activity AS ENUM ('run', 'swim', 'bike');
     CREATE TABLE IF NOT EXISTS activities (
-          activity_type text not null,
+          activity_type valid_activity not null,
           date text not null,
           username text not null
         );
-        insert into activities (activity_type, date, username) values ('test_activity', 'test_date', 'test_user');
+        insert into activities (activity_type, date, username) values ('run', 'test_date', 'test_user');
 
     GRANT ALL PRIVILEGES ON TABLE users TO webapp_test;
     GRANT ALL PRIVILEGES ON TABLE activities TO webapp_test;
