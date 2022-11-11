@@ -36,7 +36,7 @@ pub async fn insert_activity(activity: ActivityInfo, pool: &PgPool) -> eyre::Res
                 r#"INSERT INTO activities (activity_type, date, username) VALUES ($1, $2, $3)"#,
                 activity.activity_type.to_string(),
                 activity.date,
-                activity.user
+                user.username
             )
             .execute(pool)
             .await

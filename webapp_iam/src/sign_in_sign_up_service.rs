@@ -2,12 +2,9 @@ use crate::iam_logic::{check_username_password, store_username_password};
 use fred::prelude::RedisClient;
 use rocket::form::Form;
 use rocket::http::{ContentType, Status};
-use rocket::response::{content, status, Responder};
 use rocket::serde::{Deserialize, Serialize};
-use rocket::{response, Request, Response, State};
-use sqlx::types::Json;
+use rocket::State;
 use sqlx::PgPool;
-use std::borrow::Cow;
 
 #[derive(Debug, Clone, FromForm, Serialize, Deserialize)]
 #[cfg_attr(test, derive(PartialEq, UriDisplayQuery))]
@@ -19,7 +16,7 @@ pub struct LoginInfo {
 
 #[derive(Responder, Serialize)]
 #[response(content_type = "application/x-person")]
-struct Id_key {
+struct IdKey {
     id: String,
 }
 
@@ -37,14 +34,14 @@ pub async fn sign_in(
             Status::Ok,
             (
                 ContentType::JSON,
-                serde_json::to_string(&Id_key { id: s }).unwrap(),
+                serde_json::to_string(&IdKey { id: s }).unwrap(),
             ),
         ),
         Err(_) => (
             Status::Conflict,
             (
                 ContentType::JSON,
-                serde_json::to_string(&Id_key {
+                serde_json::to_string(&IdKey {
                     id: String::from(""),
                 })
                 .unwrap(),

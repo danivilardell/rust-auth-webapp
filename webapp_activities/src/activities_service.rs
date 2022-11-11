@@ -10,6 +10,6 @@ pub async fn create_activity(form: Form<ActivityInfo>, pool: &State<PgPool>) -> 
     let response = insert_activity(form.into_inner(), pool).await;
     match response {
         Ok(_) => Status::Ok,
-        Err(e) => Status::Conflict,
+        Err(_) => Status::Conflict,
     }
 }
