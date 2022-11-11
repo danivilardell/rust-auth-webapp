@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width">
     <title>Auth Login Rust</title>
     <link rel="stylesheet" href="/style.css">
-    <script src="/main_page.js" charset="utf-8" defer></script>
 </head>
 <body>
     <div class="navbar">
@@ -18,12 +17,12 @@
     <div class="info_box" style= "width: 25%; height: 70%; top: 100px; left: 15px;">
         <h1 style="text-align: center;">FILTER ACTIVITIES</h1>
     </div>
-    <div class="info_box" style= "width: 20%; height: 70%; top: 100px; right: 15px; float:right;">
+    <div class="info_box" style= "width: 20%; height: 350px; top: 100px; right: 15px; ">
         <h1 style="text-align: center;">PLAN ACTIVITY</h1>
         <center>
         <form action="/create_activity" method="POST">
-            <h3>Sport type</h3>
-            <select name="sport" class="button-23">
+            <h3>Activity type</h3>
+            <select name="activity_type" class="button-23">
                 <option value="run">Run</option>
                 <option value="bike">Bike</option>
                 <option value="swim">Swim</option>
@@ -34,17 +33,12 @@
                    name="date" value="2022-08-9T19:30"
                    min="2022-08-9T19:30" max="2023-08-9T19:30"
                    class="button-23">
-            <br>
-            <h3>Level</h3>
-            <select name="intensity" class="button-23">
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
-            </select>
+            <input id="id_key" type="hidden" name="username"/>
             <br><br><br>
             <button type="submit" class="button-23">Create Activity</button>
         </form>
         </center>
     </div>
 </body>
+<script src="/main_page.js" charset="utf-8" defer></script>
 </html>

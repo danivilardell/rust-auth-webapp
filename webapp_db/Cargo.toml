@@ -1,21 +1,19 @@
 [package]
-name = "webapp_iam"
+name = "webapp_db"
 version = "0.1.0"
 edition = "2021"
 
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [dependencies]
+tokio = "1.20.1"
 eyre = "0.6.8"
-sha2 = "0.10.2"
-base64 = "0.13.0"
-dotenv = "0.15.0"
-fred = "5.1.0"
-rocket = "0.5.0-rc.2"
-webapp_db = { path = "../webapp_db" }
 sqlx = { version = "0.6.0", default-features = false, features = [
     "postgres",
     "macros",
     "offline",
     "runtime-actix-native-tls",
 ]}
+dotenv = "0.15.0"
+rocket = "0.5.0-rc.2"
 serde = "1.0.147"
-serde_json = "1.0.87"

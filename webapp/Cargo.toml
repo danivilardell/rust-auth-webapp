@@ -11,6 +11,7 @@ fred = "5.1.0"
 rusqlite = "0.28.0"
 webapp_iam = { path = "../webapp_iam" }
 webapp_activities = { path = "../webapp_activities" }
+webapp_db = { path = "../webapp_db" }
 sqlx = { version = "0.6.0", default-features = false, features = [
     "postgres",
     "macros",

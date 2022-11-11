@@ -1,7 +1,7 @@
-use crate::redis_client::{check_username_password, store_username_password};
+use crate::iam_logic::{check_username_password, store_username_password};
 use fred::prelude::RedisClient;
 use rocket::form::Form;
-use rocket::http::Status;
+use rocket::http::{ContentType, Status};
 use rocket::serde::{Deserialize, Serialize};
 use rocket::State;
 use sqlx::PgPool;
@@ -14,25 +14,51 @@ pub struct LoginInfo {
     pub password: String,
 }
 
+#[derive(Responder, Serialize)]
+#[response(content_type = "application/x-person")]
+struct IdKey {
+    id: String,
+}
+
 #[post("/sign_in", data = "<form>")]
 pub async fn sign_in(
     form: Form<LoginInfo>,
-    redis_client: &State<RedisClient>,
+    _redis_client: &State<RedisClient>,
     pool: &State<PgPool>,
-) -> Status {
+) -> (Status, (ContentType, String)) {
     let username: String = form.username.clone();
     let password: String = form.password.clone();
-    match check_username_password(username, password, &redis_client.inner()).await {
-        Ok(_) => Status::Ok,
-        Err(_) => Status::Conflict,
+
+    match check_username_password(username, password, pool.inner()).await {
+        Ok(s) => (
+            Status::Ok,
+            (
+                ContentType::JSON,
+                serde_json::to_string(&IdKey { id: s }).unwrap(),
+            ),
+        ),
+        Err(_) => (
+            Status::Conflict,
+            (
+                ContentType::JSON,
+                serde_json::to_string(&IdKey {
+                    id: String::from(""),
+                })
+                .unwrap(),
+            ),
+        ),
     }
 }
 
 #[post("/sign_up", data = "<form>")]
-pub async fn sign_up(form: Form<LoginInfo>, state: &State<RedisClient>) -> Status {
+pub async fn sign_up(
+    form: Form<LoginInfo>,
+    _redis_client: &State<RedisClient>,
+    pool: &State<PgPool>,
+) -> Status {
     let username: String = form.username.clone();
     let password: String = form.password.clone();
-    match store_username_password(username, password, &state.inner()).await {
+    match store_username_password(username, password, pool.inner()).await {
         Ok(_) => Status::Ok,
         Err(_) => Status::Conflict,
     }

@@ -5,8 +5,12 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/webapp/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/webapp_iam/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/webapp_activities/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/webapp_db/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/webapp_db/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/webapp/target" />
+      <excludeFolder url="file://$MODULE_DIR$/webapp_db/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

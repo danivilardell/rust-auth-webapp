@@ -1,22 +1,26 @@
-use fred::prelude::*;
 use sha2::Digest;
 use sha2::Sha256;
+use sqlx::PgPool;
 use std::env;
+use webapp_db::iam_queries;
 
 pub async fn store_username_password(
     username: String,
     password: String,
-    client: &RedisClient,
+    pool: &PgPool,
 ) -> eyre::Result<()> {
-    let hashed_password = get_hash(password);
-    let exists: Option<String> = client.get(username.clone()).await?;
+    let hashed_password = get_hash(password.clone());
+    let user = iam_queries::User {
+        username: username.clone(),
+        password: hashed_password,
+    };
 
+    let exists: Option<iam_queries::User> = iam_queries::check_user(user.clone(), pool).await;
     match exists {
         Some(_) => Err(eyre::eyre!("Username already exists")),
         None => {
-            client
-                .set(username.clone(), hashed_password, None, None, false)
-                .await?;
+            iam_queries::insert_user(user, pool).await.unwrap();
+
             Ok(())
         }
     }
@@ -25,33 +29,25 @@ pub async fn store_username_password(
 pub async fn check_username_password(
     username: String,
     password: String,
-    client: &RedisClient,
-) -> eyre::Result<()> {
+    pool: &PgPool,
+) -> eyre::Result<String> {
     let hashed_password = get_hash(password);
-    let password_saved: Option<String> = client.get(username.clone()).await?;
+    let user = iam_queries::User {
+        username: username.clone(),
+        password: hashed_password.clone(),
+    };
+    let saved_user: Option<iam_queries::User> = iam_queries::check_user(user, pool).await;
 
-    match password_saved {
-        Some(pass) => {
-            if hashed_password == pass {
-                Ok(())
+    match saved_user {
+        Some(saved_user) => {
+            if hashed_password == saved_user.password {
+                Ok(hashed_password)
             } else {
                 Err(eyre::eyre!("Wrong password"))
             }
         }
         None => Err(eyre::eyre!("Username doesn't exists")),
     }
-}
-
-pub async fn init_redis() -> eyre::Result<RedisClient> {
-    let config = RedisConfig::default();
-    let policy = ReconnectPolicy::default();
-    let client = RedisClient::new(config);
-
-    client.connect(Some(policy));
-    client.wait_for_connect().await?;
-    client.flushall(false).await?;
-
-    Ok(client)
 }
 
 fn get_hash(password: String) -> String {
