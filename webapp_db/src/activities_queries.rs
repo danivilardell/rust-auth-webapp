@@ -5,7 +5,7 @@ use sqlx::PgPool;
 use std::fmt;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, FromFormField, sqlx::Type)]
-#[sqlx(type_name = "activitytype", rename_all = "lowercase")]
+#[sqlx(type_name = "valid_activity", rename_all = "lowercase")]
 pub enum ActivityType {
     Swim,
     Run,
@@ -42,14 +42,17 @@ pub async fn insert_activity(activity: ActivityInfo, pool: &PgPool) -> eyre::Res
             .await
             {
                 Ok(_) => Ok(()),
-                Err(_) => Err(eyre::eyre!("Can't insert value to database")),
+                Err(e) => {
+                    println!("{:?}", e);
+                    Err(eyre::eyre!("Can't insert value to database"))
+                },
             }
         }
-        None => Err(eyre::eyre!("Can't insert value to database")),
+        None => Err(eyre::eyre!("You have to log in first!")),
     }
 }
 
-pub async fn get_activities(pool: &PgPool) -> eyre::Result<Vec<ActivityInfo>> {
+pub async fn get_activities_query(pool: &PgPool) -> eyre::Result<Vec<ActivityInfo>> {
     match sqlx::query_as!(
         ActivityInfo,
         r#"SELECT activity_type AS "activity_type: ActivityType", date, username FROM activities"#
