@@ -10,9 +10,10 @@ use std::fmt;
 pub enum ActivityType {
     Swim,
     Run,
-    Bike, //Movie,
-          //Convention,
-          //Concert,
+    Bike,
+    Movie,
+    Convention,
+    Concert,
 }
 
 impl fmt::Display for ActivityType {

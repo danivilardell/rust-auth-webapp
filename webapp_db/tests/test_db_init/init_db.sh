@@ -13,7 +13,7 @@ psql -v ON_ERROR_STOP=1 --username postgres <<-EOSQL
     );
     insert into users (username, password) values ('test_user', 'test_password');
 
-    CREATE TYPE valid_activity AS ENUM ('run', 'swim', 'bike');
+    CREATE TYPE valid_activity AS ENUM ('run', 'swim', 'bike', 'movie', 'convention', 'concert');
     CREATE TABLE IF NOT EXISTS activities (
           activity_type valid_activity not null,
           date text not null,

@@ -41,6 +41,15 @@ function create_activity(activity, value) {
         case 'Swim':
             activity_info_user.innerHTML = '<i class="fa fa-person-swimming" style="font-size:30px;"></i>&nbsp;';
             break;
+        case 'Concert':
+            activity_info_user.innerHTML = '<i class="fa fa-music" style="font-size:30px;"></i>&nbsp;';
+            break;
+        case 'Movie':
+            activity_info_user.innerHTML = '<i class="fas fa-film" style="font-size:30px;"></i>&nbsp;';
+            break;
+        case 'Convention':
+            activity_info_user.innerHTML = '<i class="fa fa-group" style="font-size:30px;"></i>&nbsp;';
+            break;
     }
 
     activity_info_user.innerHTML += '&emsp;&emsp;&emsp;<b><a>' + activity.date.substring(0, 10) + "&emsp;" + activity.date.substring(11, 17) + '</a></b>'
@@ -78,7 +87,7 @@ function create_activity(activity, value) {
         activity_info_user.appendChild(join_form);
         activity_info_user.innerHTML += "<br><br>";
     }
-    else activity_info_user.innerHTML += "<br><br><br>";
+    else activity_info_user.innerHTML += "<br><br>";
     div.appendChild(activity_info_user);
 
     activity_joined_by = document.createElement("div");
