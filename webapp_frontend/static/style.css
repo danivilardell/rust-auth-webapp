@@ -36,6 +36,31 @@ h3 {
     border: 2px solid #222222;
 }
 
+.info_box2 {
+    z-index: 0;
+    margin: 0 auto;
+    padding: 30px 30px;
+    background-color: white;
+    border: 1px solid #C0C0C0;
+    position: relative;
+    border-radius: 8px;
+    border: 2px solid #222222;
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    vertical-align: center;
+}
+
+.activities_div {
+    z-index: 0;
+    margin: 0 auto;
+    padding: 30px 20px;
+    background-color: white;
+    border: 1px solid #C0C0C0;
+    border-radius: 8px;
+    border: 2px solid #222222;
+    position: absolute;
+}
+
 .background {
   position: relative;
   left: 0;
@@ -226,4 +251,9 @@ body {
 .clear {
     float: none;
     clear: both;
+}
+
+.join_form {
+    display: incline;
+    float: right;
 }

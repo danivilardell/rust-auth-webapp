@@ -4,7 +4,7 @@ extern crate rocket;
 use dotenv::dotenv;
 use fred::prelude::*;
 use rocket::fs::{relative, FileServer};
-use webapp_activities::activities_service::{create_activity, get_activities};
+use webapp_activities::activities_service::{create_activity, get_activities, join_activity};
 use webapp_db::db_init::connect_db;
 use webapp_iam::sign_in_sign_up_service::{sign_in, sign_up};
 
@@ -17,7 +17,13 @@ async fn rocket() -> _ {
     rocket::build()
         .mount(
             "/",
-            routes![sign_in, sign_up, create_activity, get_activities],
+            routes![
+                sign_in,
+                sign_up,
+                create_activity,
+                get_activities,
+                join_activity
+            ],
         )
         .mount(
             "/",

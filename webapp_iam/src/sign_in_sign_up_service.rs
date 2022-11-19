@@ -14,10 +14,10 @@ pub struct LoginInfo {
     pub password: String,
 }
 
-#[derive(Responder, Serialize)]
-#[response(content_type = "application/x-person")]
-struct IdKey {
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct IdKey {
     id: String,
+    username: String,
 }
 
 #[post("/sign_in", data = "<form>")]
@@ -29,12 +29,12 @@ pub async fn sign_in(
     let username: String = form.username.clone();
     let password: String = form.password.clone();
 
-    match check_username_password(username, password, pool.inner()).await {
+    match check_username_password(username.clone(), password, pool.inner()).await {
         Ok(s) => (
             Status::Ok,
             (
                 ContentType::JSON,
-                serde_json::to_string(&IdKey { id: s }).unwrap(),
+                serde_json::to_string(&IdKey { id: s, username }).unwrap(),
             ),
         ),
         Err(_) => (
@@ -43,6 +43,7 @@ pub async fn sign_in(
                 ContentType::JSON,
                 serde_json::to_string(&IdKey {
                     id: String::from(""),
+                    username: String::from(""),
                 })
                 .unwrap(),
             ),

@@ -17,9 +17,10 @@ psql -v ON_ERROR_STOP=1 --username postgres <<-EOSQL
     CREATE TABLE IF NOT EXISTS activities (
           activity_type valid_activity not null,
           date text not null,
-          username text not null
+          username text not null,
+          id text not null,
+          joined text [] not null
         );
-        insert into activities (activity_type, date, username) values ('run', 'test_date', 'test_user');
 
     GRANT ALL PRIVILEGES ON TABLE users TO webapp_test;
     GRANT ALL PRIVILEGES ON TABLE activities TO webapp_test;
