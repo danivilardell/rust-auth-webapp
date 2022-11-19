@@ -32,6 +32,8 @@ function sign_in() {
             response.json().then(function(result) {
                 window.location.href = "/main_page.html";
                 document.cookie = "id_key=" + result.id;
+                document.cookie = "username=" + result.username;
+                console.log(result.username)
             })
         }
         else if(response.status == 409) alert("Wrong username or password.");

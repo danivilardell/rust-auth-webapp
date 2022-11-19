@@ -5,24 +5,28 @@
     <meta name="viewport" content="width=device-width">
     <title>Auth Login Rust</title>
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/dc48f42d0d.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="navbar">
-        <a class="button-23" href="#home">Home</a>
-        <a class="button-23" href="#news">News</a>
-        <a class="button-23" href="#contact">Contact</a>
-        <a class="button-23" href="../index.html" style="margin-left: auto; float:right; position: relative; right: 30px;">Log out</a>
+        <a style="font-family: 'Open Sans', sans-serif; color:#525252; font-size: 45px; font-weight: bold; color: black">ACTIVITY PLANNER</a>
+        <a class="button-23" onclick="logout()" href="../index.html" style="margin-left: auto; float:right; position: relative; right: 30px;">Log out</a>
+        <a id= "logged_in_as" style="margin-left: auto; float:right; position: relative; right: 40px; font-weight: bold; font-size: 18px"> </a>
     </div>
 
-    <div class="info_box" style= "width: 25%; height: 70%; top: 100px; left: 15px;">
+    <div class="info_box" style= "width: 25%; height: 70%; top: 100px; left: 15px; background-color: #FAFAFA;">
         <h1 style="text-align: center;">FILTER ACTIVITIES</h1>
     </div>
-    <div class="info_box" style= "width: 20%; height: 350px; top: 100px; right: 15px; ">
+    <div id="activities_div" class="activities_div" style= "width: 40%; height: 100%; top: 100px; right: 400px; background-color: #FAFAFA;">
+
+    </div>
+    <div class="info_box" style= "width: 20%; height: 350px; top: 100px; right: 15px; background-color: #FAFAFA;">
         <h1 style="text-align: center;">PLAN ACTIVITY</h1>
         <center>
-        <form action="/create_activity" method="POST">
+        <form id="submit_activity">
             <h3>Activity type</h3>
-            <select name="activity_type" class="button-23">
+            <select name="activity_type" class="button-23" required>
                 <option value="run">Run</option>
                 <option value="bike">Bike</option>
                 <option value="swim">Swim</option>
@@ -32,8 +36,12 @@
             <input type="datetime-local"
                    name="date" value="2022-08-9T19:30"
                    min="2022-08-9T19:30" max="2023-08-9T19:30"
-                   class="button-23">
+                   class="button-23"
+                   required
+            >
             <input id="id_key" type="hidden" name="username"/>
+            <input type="hidden" name="id"/>
+            <input type="hidden" name="joined"/>
             <br><br><br>
             <button type="submit" class="button-23">Create Activity</button>
         </form>

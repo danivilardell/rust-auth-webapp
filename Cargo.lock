@@ -2345,6 +2345,7 @@ version = "0.1.0"
 dependencies = [
  "dotenv",
  "eyre",
+ "rand",
  "rocket",
  "serde",
  "sqlx",
