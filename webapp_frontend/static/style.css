@@ -257,3 +257,13 @@ body {
     display: incline;
     float: right;
 }
+
+.filter-checkbox {
+    font-size: 50px;
+    text-align: left;
+}
+
+.filter-cbx-text {
+    font-size: 20px;
+    text-align: left;
+}

@@ -66,7 +66,7 @@ pub async fn insert_activity(activity: ActivityInfo, pool: &PgPool) -> eyre::Res
 pub async fn get_activities_query(pool: &PgPool) -> eyre::Result<Vec<ActivityInfo>> {
     match sqlx::query_as!(
         ActivityInfo,
-        r#"SELECT activity_type AS "activity_type: ActivityType", date, username, id, joined FROM activities"#
+        r#"SELECT activity_type AS "activity_type: ActivityType", date, username, id, joined FROM activities ORDER BY date DESC"#
     )
     .fetch_all(pool)
     .await
@@ -75,8 +75,6 @@ pub async fn get_activities_query(pool: &PgPool) -> eyre::Result<Vec<ActivityInf
         Err(_) => Err(eyre::eyre!("Can't get activities from database.")),
     }
 }
-
-
 
 #[derive(Debug, Clone, FromForm, Serialize, Deserialize)]
 pub struct JoinActivity {

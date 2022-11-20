@@ -33,8 +33,6 @@ pub async fn get_activities(pool: &State<PgPool>) -> (Status, (ContentType, Stri
     }
 }
 
-
-
 #[post("/join_activity", data = "<form>")]
 pub async fn join_activity(form: Form<JoinActivity>, pool: &State<PgPool>) -> Status {
     let response = join_activity_query(form.into_inner(), pool).await;
