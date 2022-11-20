@@ -3,7 +3,7 @@ use rocket::http::{ContentType, Status};
 use rocket::{get, post, State};
 use sqlx::PgPool;
 use webapp_db::activities_queries::{
-    get_activities_query, insert_activity, join_activity_query, ActivityInfo, JoinActivity
+    get_activities_query, insert_activity, join_activity_query, ActivityInfo, JoinActivity,
 };
 
 #[post("/create_activity", data = "<form>")]

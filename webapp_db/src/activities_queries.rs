@@ -93,14 +93,14 @@ pub async fn join_activity_query(join_activity: JoinActivity, pool: &PgPool) -> 
                 join_activity.user,
                 join_activity.id
             )
-                .execute(pool)
-                .await
+            .execute(pool)
+            .await
             {
                 Ok(_) => Ok(()),
                 Err(e) => {
                     println!("{:?}", e);
                     Err(eyre::eyre!("Can't add username to join list"))
-                },
+                }
             }
         }
         None => Err(eyre::eyre!("You have to log in first!")),
