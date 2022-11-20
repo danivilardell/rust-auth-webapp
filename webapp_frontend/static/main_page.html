@@ -15,10 +15,26 @@
         <a id= "logged_in_as" style="margin-left: auto; float:right; position: relative; right: 40px; font-weight: bold; font-size: 18px"> </a>
     </div>
 
-    <div class="info_box" style= "width: 25%; height: 70%; top: 100px; left: 15px; background-color: #FAFAFA;">
+    <div class="info_box" style= "width: 25%; height: 70%; top: 100px; left: 15px; background-color: #FAFAFA; text-align: center;">
         <h1 style="text-align: center;">FILTER ACTIVITIES</h1>
+        <form id="filter_activities">
+            <h3>BY TYPE</h3>
+            <input id="run_cbx" type="checkbox" class="filter-checkbox" checked><a class="filter-cbx-text">&nbsp;&nbsp;Run</a></input><br><br>
+            <input id="swim_cbx" type="checkbox" class="filter-checkbox" checked><a class="filter-cbx-text">&nbsp;&nbsp;Swim</a></input><br><br>
+            <input id="bike_cbx" type="checkbox" class="filter-checkbox" checked><a class="filter-cbx-text">&nbsp;&nbsp;Bike</a></input><br><br>
+            <input id="concert_cbx" type="checkbox" class="filter-checkbox" checked><a class="filter-cbx-text">&nbsp;&nbsp;Concert</a></input><br><br>
+            <input id="convention_cbx" type="checkbox" class="filter-checkbox" checked><a class="filter-cbx-text">&nbsp;&nbsp;Convention</a></input><br><br>
+            <input id="movie_cbx" type="checkbox" class="filter-checkbox" checked><a class="filter-cbx-text">&nbsp;&nbsp;Movie</a></input><br><br>
+            <h3>BY DATE</h3>
+            <input type="date"
+                   name="date" id="filter_date"
+                   min="2022-08-9" max="2023-08-9"
+                   class="button-23"
+            ><br><br>
+            <button class="button-23">Filter</button>
+        </form>
     </div>
-    <div id="activities_div" class="activities_div" style= "width: 40%; height: 100%; top: 100px; right: 400px; background-color: #FAFAFA;">
+    <div id="activities_div" class="activities_div" style= "width: 40%; top: 100px; right: 400px; background-color: #FAFAFA;">
 
     </div>
     <div class="info_box" style= "width: 20%; height: 350px; top: 100px; right: 15px; background-color: #FAFAFA;">
@@ -30,6 +46,9 @@
                 <option value="run">Run</option>
                 <option value="bike">Bike</option>
                 <option value="swim">Swim</option>
+                <option value="concert">Concert</option>
+                <option value="movie">Movie</option>
+                <option value="convention">Convention</option>
             </select>
             <br>
             <h3>Date</h3>

@@ -3,7 +3,7 @@ use rocket::http::{ContentType, Status};
 use rocket::{get, post, State};
 use sqlx::PgPool;
 use webapp_db::activities_queries::{
-    get_activities_query, insert_activity, join_activity_query, ActivityInfo, JoinActivity
+    get_activities_query, insert_activity, join_activity_query, ActivityInfo, JoinActivity,
 };
 
 #[post("/create_activity", data = "<form>")]
@@ -32,8 +32,6 @@ pub async fn get_activities(pool: &State<PgPool>) -> (Status, (ContentType, Stri
         Err(_) => (Status::BadRequest, (ContentType::JSON, String::from("{}"))),
     }
 }
-
-
 
 #[post("/join_activity", data = "<form>")]
 pub async fn join_activity(form: Form<JoinActivity>, pool: &State<PgPool>) -> Status {

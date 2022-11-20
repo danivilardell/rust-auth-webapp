@@ -41,6 +41,15 @@ function create_activity(activity, value) {
         case 'Swim':
             activity_info_user.innerHTML = '<i class="fa fa-person-swimming" style="font-size:30px;"></i>&nbsp;';
             break;
+        case 'Concert':
+            activity_info_user.innerHTML = '<i class="fa fa-music" style="font-size:30px;"></i>&nbsp;';
+            break;
+        case 'Movie':
+            activity_info_user.innerHTML = '<i class="fas fa-film" style="font-size:30px;"></i>&nbsp;';
+            break;
+        case 'Convention':
+            activity_info_user.innerHTML = '<i class="fa fa-group" style="font-size:30px;"></i>&nbsp;';
+            break;
     }
 
     activity_info_user.innerHTML += '&emsp;&emsp;&emsp;<b><a>' + activity.date.substring(0, 10) + "&emsp;" + activity.date.substring(11, 17) + '</a></b>'
@@ -78,7 +87,7 @@ function create_activity(activity, value) {
         activity_info_user.appendChild(join_form);
         activity_info_user.innerHTML += "<br><br>";
     }
-    else activity_info_user.innerHTML += "<br><br><br>";
+    else activity_info_user.innerHTML += "<br><br>";
     div.appendChild(activity_info_user);
 
     activity_joined_by = document.createElement("div");
@@ -99,13 +108,17 @@ function formSubmitJoin(event) {
   var url = "/join_activity";
   var request = new XMLHttpRequest();
   request.open('POST', url, true);
-  request.onload = function() {
-    update_activities_shown();
-  };
-
-  request.onerror = function() {
-    // request failed
-  };
+  var aux = 0;
+  request.onreadystatechange = function() {
+       if (this.readyState == 4 && this.status == 200) {
+           update_activities_shown();
+      }
+      else if(this.status == 409) {
+          if(aux == 0) alert("Need to first sign in!.");
+          aux++;
+          return;
+      }
+   };
 
   request.send(new FormData(event.target));
   event.preventDefault();
@@ -119,8 +132,10 @@ function show_activites(activities) {
     var activities_div = document.getElementById("activities_div");
     activities_div.innerHTML = '<h1 style="text-align: center;">ACTIVITIES BOARD</h1><br>';
     for(var i = activities.length-1; i >= 0; i--) {
-        activities_div.appendChild(create_activity(activities[i], i))
-        if(activities[i].username != getCookie("username")) attachFormSubmitEventJoin("form" + i);
+        if(document.getElementById(activities[i].activity_type.toLowerCase() + "_cbx").checked) {
+            activities_div.appendChild(create_activity(activities[i], i))
+            if(activities[i].username != getCookie("username")) attachFormSubmitEventJoin("form" + i);
+        }
     }
 }
 
@@ -152,13 +167,21 @@ function update_activities_shown() {
 function formSubmitCreate(event) {
   var url = "/create_activity";
   var request = new XMLHttpRequest();
+  var aux = 0;
+  request.onreadystatechange = function() {
+     if (this.readyState == 4 && this.status == 200) {
+         update_activities_shown();
+    }
+    else if(this.status == 422) {
+        if(aux == 0) alert("Need to first sign in!.");
+        aux++;
+        return;
+    }
+ };
+
   request.open('POST', url, true);
   request.onload = function() {
     update_activities_shown();
-  };
-
-  request.onerror = function() {
-    // request failed
   };
 
   request.send(new FormData(event.target));
@@ -173,6 +196,7 @@ function init() {
     document.getElementById("id_key").value = getCookie("id_key")
     update_activities_shown();
     attachFormSubmitEventCreate("submit_activity")
+    attachFormSubmitEventCreate("filter_activities")
     if("" != getCookie("username")) document.getElementById("logged_in_as").innerHTML = "LOGGED IN AS " + getCookie("username");
 }
 
