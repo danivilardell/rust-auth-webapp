@@ -54,7 +54,7 @@ function create_activity(activity, value) {
 
     activity_info_user.innerHTML += '&emsp;&emsp;&emsp;<b><a>' + activity.date.substring(0, 10) + "&emsp;" + activity.date.substring(11, 17) + '</a></b>'
     activity_info_user.innerHTML += "&emsp;&emsp;<a> created by </a>" + "<b>" + activity.username + "</b>";
-    if(activity.username != getCookie("username")) {
+    if(activity.username != getCookie("username")  && !activity.joined.includes(getCookie("username"))) {
         var join_form = document.createElement('form');
         join_form.className = "join_form";
         join_form.id = "form" + value;
@@ -132,9 +132,11 @@ function show_activites(activities) {
     var activities_div = document.getElementById("activities_div");
     activities_div.innerHTML = '<h1 style="text-align: center;">ACTIVITIES BOARD</h1><br>';
     for(var i = activities.length-1; i >= 0; i--) {
-        if(document.getElementById(activities[i].activity_type.toLowerCase() + "_cbx").checked) {
+        if(document.getElementById(activities[i].activity_type.toLowerCase() + "_cbx").checked ) {
             activities_div.appendChild(create_activity(activities[i], i))
-            if(activities[i].username != getCookie("username")) attachFormSubmitEventJoin("form" + i);
+            if(activities[i].username != getCookie("username")  && !activities[i].joined.includes(getCookie("username"))) {
+                attachFormSubmitEventJoin("form" + i);
+            }
         }
     }
 }
@@ -188,15 +190,24 @@ function formSubmitCreate(event) {
   event.preventDefault();
 }
 
+function formFilterEvent(event) {
+    event.preventDefault();
+    update_activities_shown();
+}
+
 function attachFormSubmitEventCreate(formId){
   document.getElementById(formId).addEventListener("submit", formSubmitCreate);
+}
+
+function attachFormFilterEventCreate(formId){
+  document.getElementById(formId).addEventListener("submit", formFilterEvent);
 }
 
 function init() {
     document.getElementById("id_key").value = getCookie("id_key")
     update_activities_shown();
     attachFormSubmitEventCreate("submit_activity")
-    attachFormSubmitEventCreate("filter_activities")
+    attachFormFilterEventCreate("filter_activities")
     if("" != getCookie("username")) document.getElementById("logged_in_as").innerHTML = "LOGGED IN AS " + getCookie("username");
 }
 
