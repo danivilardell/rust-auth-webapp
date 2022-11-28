@@ -9,7 +9,7 @@ pub async fn store_username_password(
     password: String,
     pool: &PgPool,
 ) -> eyre::Result<()> {
-    let hashed_password = get_hash(password.clone());
+    let hashed_password = get_hash(password.clone(), username.clone());
     let user = iam_queries::User {
         username: username.clone(),
         password: hashed_password,
@@ -31,7 +31,7 @@ pub async fn check_username_password(
     password: String,
     pool: &PgPool,
 ) -> eyre::Result<String> {
-    let hashed_password = get_hash(password);
+    let hashed_password = get_hash(password, username.clone());
     let user = iam_queries::User {
         username: username.clone(),
         password: hashed_password.clone(),
@@ -50,10 +50,10 @@ pub async fn check_username_password(
     }
 }
 
-fn get_hash(password: String) -> String {
+fn get_hash(password: String, user: String) -> String {
     let mut hasher = Sha256::new();
     let salt = env::var("PASSWORD_SALT").unwrap();
-    let salted_password = format!("{}{}", salt, password);
+    let salted_password = format!("{}{}{}", salt, user, password);
     hasher.update(salted_password.into_bytes());
     let hashed_password = hasher.finalize();
     base64::encode(hashed_password)
